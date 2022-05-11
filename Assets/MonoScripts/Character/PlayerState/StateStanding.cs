@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class StateStanding : PlayerStateBase
 {
-    public override void OnEnter(PlayerCore owner, PlayerStateBase prevState)
-    {
-
-    }
-
     public override void OnUpdate(PlayerCore owner)
     {
         //移動キーが押されていればStateMovingに遷移する
@@ -16,5 +11,9 @@ public class StateStanding : PlayerStateBase
         {
             owner.ChangeState(owner.StateMoving);
         }
+        //スピードの取得
+        var speed = owner.InputEventProvider.MoveDirection.Value.x;
+        //アニメーターにスピード値をセットする
+        owner.Anim.SetFloat("Speed", Mathf.Abs(speed));
     }
 }
