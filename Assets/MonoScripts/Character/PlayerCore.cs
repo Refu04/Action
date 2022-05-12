@@ -51,7 +51,7 @@ public class PlayerCore : MonoBehaviour
         //入力イベントの取得
         InputEventProvider = GetComponent<IInputEventProvider>();
     }
-    
+
     void Update()
     {
         //現在のステートのUpdate呼び出し
@@ -62,7 +62,8 @@ public class PlayerCore : MonoBehaviour
         if (transform.localEulerAngles.y == 180)
         {
             isRight = true;
-        } else if (transform.localEulerAngles.y == 0)
+        }
+        else if (transform.localEulerAngles.y == 0)
         {
             isRight = false;
         }
@@ -83,7 +84,7 @@ public class PlayerCore : MonoBehaviour
         //次のステート開始時の処理
         nextState.OnEnter(this, currentState);
         currentState = nextState;
-        
+
     }
 
     private void CheckGrounded()

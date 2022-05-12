@@ -29,6 +29,7 @@ public class StateJumping : PlayerStateBase
         owner.Rb.useGravity = false;
         //èdóÕÇÇ©ÇØÇÈ
         AddGravity(owner, cts.Token).Forget();
+        Debug.Log("StateJumping");
     }
 
     public override void OnUpdate(PlayerCore owner)
@@ -45,6 +46,7 @@ public class StateJumping : PlayerStateBase
             {
                 Debug.DrawRay(new Vector3(hit.point.x - 0.1f, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right * 1, Color.red);
 
+                owner.Anim.SetBool("isCliming", true);
                 owner.transform.position = new Vector3(
                     hit.point.x,
                     hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2,

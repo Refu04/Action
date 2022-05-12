@@ -7,7 +7,7 @@ public class StateMoving : PlayerStateBase
 {
     public override void OnEnter(PlayerCore owner, PlayerStateBase prevState)
     {
-        
+        Debug.Log("StateMoving");
     }
 
     public override void OnUpdate(PlayerCore owner)
@@ -29,6 +29,7 @@ public class StateMoving : PlayerStateBase
             owner.InputEventProvider.MoveDirection.Value.x * 10f,
             owner.Rb.velocity.y,
             0);
+        Debug.Log(owner.Rb.velocity);
 
         //ステート遷移処理
         //スピードが０になったらStateStandingに遷移する

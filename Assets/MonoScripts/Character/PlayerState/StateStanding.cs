@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class StateStanding : PlayerStateBase
 {
+    public override void OnEnter(PlayerCore owner, PlayerStateBase prevState)
+    {
+        Debug.Log("StateStanding");
+    }
+
     public override void OnUpdate(PlayerCore owner)
     {
         //ˆÚ“®ƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚ê‚ÎStateMoving‚É‘JˆÚ‚·‚é

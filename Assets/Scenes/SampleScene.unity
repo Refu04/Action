@@ -723,6 +723,10 @@ PrefabInstance:
       propertyPath: characterHeightOffset
       value: -0.13
       objectReference: {fileID: 0}
+    - target: {fileID: 4914512241104279273, guid: d0aa5bbd2b8f40d4ca00564c8422ea0a, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4914512241104279274, guid: d0aa5bbd2b8f40d4ca00564c8422ea0a, type: 3}
       propertyPath: m_Name
       value: zero
@@ -737,7 +741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5726338422988344400, guid: d0aa5bbd2b8f40d4ca00564c8422ea0a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.01
+      value: -1.99
       objectReference: {fileID: 0}
     - target: {fileID: 5726338422988344400, guid: d0aa5bbd2b8f40d4ca00564c8422ea0a, type: 3}
       propertyPath: m_LocalPosition.z
