@@ -20,6 +20,10 @@ public class PlayerCore : MonoBehaviour
     private Rigidbody rb;
     public Rigidbody Rb => rb;
 
+    //向き
+    private bool isRight;
+    public bool IsRight => isRight;
+
     //各種パラメータ
     //ジャンプスピード
     [SerializeField]
@@ -55,6 +59,13 @@ public class PlayerCore : MonoBehaviour
         //ステートに関わらず行う処理
         //着地判定
         CheckGrounded();
+        if (transform.localEulerAngles.y == 180)
+        {
+            isRight = true;
+        } else if (transform.localEulerAngles.y == 0)
+        {
+            isRight = false;
+        }
     }
 
     //ステートの割当

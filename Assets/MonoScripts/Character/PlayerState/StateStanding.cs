@@ -15,5 +15,12 @@ public class StateStanding : PlayerStateBase
         var speed = owner.InputEventProvider.MoveDirection.Value.x;
         //アニメーターにスピード値をセットする
         owner.Anim.SetFloat("Speed", Mathf.Abs(speed));
+
+        //ステート遷移処理
+        //ジャンプしたらStateJumpingに遷移する
+        if (owner.InputEventProvider.IsJumping.Value)
+        {
+            owner.ChangeState(owner.StateJumping);
+        }
     }
 }

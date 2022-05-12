@@ -10,6 +10,9 @@ using Cysharp.Threading.Tasks;
 public class StateJumping : PlayerStateBase
 {
     private CancellationTokenSource cts;
+    private RaycastHit hit;
+    private RaycastHit hitTest;
+
     public override void OnEnter(PlayerCore owner, PlayerStateBase prevState)
     {
         //接地しているか
@@ -32,6 +35,26 @@ public class StateJumping : PlayerStateBase
     {
         //AnimatorのJumpSpeedパラメータに加速度の値を割り振る
         owner.Anim.SetFloat("JumpSpeed", owner.Rb.velocity.y);
+        //崖捕まり判定
+        var startHeightOffset = 4f;
+        var armLength = 1f;
+        Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right * 3, Color.red);
+        if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right, out hit, 3f))
+        {
+            if (!Physics.Raycast(new Vector3(hit.point.x - 0.1f, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right, out hitTest, 1f))
+            {
+                Debug.DrawRay(new Vector3(hit.point.x - 0.1f, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right * 1, Color.red);
+
+                owner.transform.position = new Vector3(
+                    hit.point.x,
+                    hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2,
+                    hit.point.z
+                );
+                owner.Rb.velocity = Vector3.zero;
+            }
+        }
+
+
     }
 
     public override void OnExit(PlayerCore owner, PlayerStateBase nextState)
@@ -69,4 +92,5 @@ public class StateJumping : PlayerStateBase
             owner.Rb.AddForce(new Vector3(0, -38f, 0), ForceMode.Acceleration);
         }
     }
+    
 }
