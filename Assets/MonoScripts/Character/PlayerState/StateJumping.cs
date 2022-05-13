@@ -39,14 +39,14 @@ public class StateJumping : PlayerStateBase
         //ŠR•ß‚Ü‚è”»’è
         var startHeightOffset = 4f;
         var armLength = 1f;
+        var rayOffset = owner.IsRight ? -0.1f : 0.1f;
         Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right * 3, Color.red);
         if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right, out hit, 3f))
         {
-            if (!Physics.Raycast(new Vector3(hit.point.x - 0.1f, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right, out hitTest, 1f))
+            if (!Physics.Raycast(new Vector3(hit.point.x + rayOffset, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right, out hitTest, 1f))
             {
-                Debug.DrawRay(new Vector3(hit.point.x - 0.1f, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right * 1, Color.red);
-
-                owner.Anim.SetBool("isCliming", true);
+                Debug.DrawRay(new Vector3(hit.point.x + rayOffset, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right * 1, Color.red);
+                
                 owner.transform.position = new Vector3(
                     hit.point.x,
                     hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2,
