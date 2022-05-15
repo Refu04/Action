@@ -16,6 +16,6 @@ public class InputEventProviderImpl : MonoBehaviour, IInputEventProvider
     {
         isJumping.Value = Input.GetKeyDown(KeyCode.Space);
         //ˆÚ“®‘€ì‚Ì“ü—Í’l‚ğ’Ê’m‚·‚é
-        move.SetValueAndForceNotify(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")));
+        move.SetValueAndForceNotify(new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")));
     }
 }

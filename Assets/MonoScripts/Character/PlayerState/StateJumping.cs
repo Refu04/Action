@@ -11,7 +11,6 @@ public class StateJumping : PlayerStateBase
 {
     private CancellationTokenSource cts;
     private RaycastHit hit;
-    private RaycastHit hitTest;
 
     public override void OnEnter(PlayerCore owner, PlayerStateBase prevState)
     {
@@ -40,19 +39,25 @@ public class StateJumping : PlayerStateBase
         var startHeightOffset = 4f;
         var armLength = 1f;
         var rayOffset = owner.IsRight ? -0.1f : 0.1f;
-        Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right * 3, Color.red);
-        if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right, out hit, 3f))
+        var posOffset = owner.IsRight ? -0.3f : 0.3f;
+        //首辺りからrayを飛ばす
+        Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right * armLength, Color.red);
+        if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right, out hit, armLength))
         {
-            if (!Physics.Raycast(new Vector3(hit.point.x + rayOffset, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right, out hitTest, 1f))
+            //頭の上辺りからrayを飛ばす
+            if (!Physics.Raycast(new Vector3(owner.transform.position.x, hit.point.y + armLength + 0.5f, owner.transform.position.z), -owner.transform.right, 1f))
             {
-                Debug.DrawRay(new Vector3(hit.point.x + rayOffset, hit.point.y + armLength, owner.transform.position.z), -owner.transform.right * 1, Color.red);
-                
-                owner.transform.position = new Vector3(
-                    hit.point.x,
-                    hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2,
+                Debug.DrawRay(new Vector3(owner.transform.position.x, hit.point.y + armLength + 0.5f, owner.transform.position.z), -owner.transform.right * 1, Color.red);
+                //2本目のrayが何にも当たらなければ崖捕まり
+                 owner.transform.position = new Vector3(
+                    hit.point.x + posOffset,
+                    hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2 - 4.9f,
                     hit.point.z
                 );
+                //加速度を無くす
                 owner.Rb.velocity = Vector3.zero;
+                //StateClimingに移行
+                owner.ChangeState(owner.StateClimbing);
             }
         }
 
@@ -77,7 +82,6 @@ public class StateJumping : PlayerStateBase
             //着地したらStateStandingに遷移する
             if (owner.IsGrounded)
             {
-                
                 owner.ChangeState(owner.StateStanding);
                 break;
             }
@@ -94,5 +98,4 @@ public class StateJumping : PlayerStateBase
             owner.Rb.AddForce(new Vector3(0, -38f, 0), ForceMode.Acceleration);
         }
     }
-    
 }

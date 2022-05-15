@@ -8,6 +8,7 @@ public class PlayerCore : MonoBehaviour
     public PlayerStateBase StateStanding { get; set; } = new StateStanding();
     public PlayerStateBase StateMoving { get; set; } = new StateMoving();
     public PlayerStateBase StateJumping { get; set; } = new StateJumping();
+    public PlayerStateBase StateClimbing { get; set; } = new StateClimbing();
 
     //現在のステート
     private PlayerStateBase currentState;
@@ -19,6 +20,11 @@ public class PlayerCore : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
     public Rigidbody Rb => rb;
+
+    //当たり判定
+    [SerializeField]
+    private BoxCollider col;
+    public BoxCollider Col => col;
 
     //向き
     private bool isRight;
@@ -59,6 +65,8 @@ public class PlayerCore : MonoBehaviour
         //ステートに関わらず行う処理
         //着地判定
         CheckGrounded();
+        
+        
         if (transform.localEulerAngles.y == 180)
         {
             isRight = true;
@@ -107,4 +115,6 @@ public class PlayerCore : MonoBehaviour
             Gizmos.DrawWireCube(transform.position + Vector3.down * hit.distance, new Vector3(1f, 0.2f, 1f));
         }
     }
+
+    
 }

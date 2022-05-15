@@ -5,6 +5,7 @@ using UnityEngine;
 //移動中
 public class StateMoving : PlayerStateBase
 {
+    private float speed;
     public override void OnEnter(PlayerCore owner, PlayerStateBase prevState)
     {
         Debug.Log("StateMoving");
@@ -32,7 +33,7 @@ public class StateMoving : PlayerStateBase
 
         //ステート遷移処理
         //スピードが０になったらStateStandingに遷移する
-        if(Mathf.Abs(speed) <= 0)
+        if (Mathf.Abs(speed) <= 0)
         {
             owner.ChangeState(owner.StateStanding);
         }
