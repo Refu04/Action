@@ -41,7 +41,8 @@ public class PlayerCore : MonoBehaviour
     private float characterHeightOffset;
     //接地判定に使うレイヤ
     [SerializeField]
-    LayerMask groundMask;
+    private LayerMask groundMask;
+    public LayerMask GroundMask => groundMask;
     RaycastHit hit;
 
     //着地判定

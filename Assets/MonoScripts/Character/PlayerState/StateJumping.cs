@@ -61,7 +61,47 @@ public class StateJumping : PlayerStateBase
             }
         }
         //壁スライド判定
-
+        var slide = Physics.BoxCast(
+            owner.transform.position + new Vector3(0, 1.7f, 0),
+            new Vector3(0.1f, 1.5f, 1f),
+            -owner.transform.right,
+            owner.transform.rotation,
+            0.1f,
+            owner.GroundMask);
+        //壁スライド中の処理
+        if(slide)
+        {
+            //右を向いている時
+            if(owner.IsRight)
+            {
+                //右に入力していた場合
+                if(owner.InputEventProvider.MoveDirection.Value.x > 0)
+                {
+                    owner.Anim.SetBool("IsWallSliding", true);
+                    if (owner.Rb.velocity.y < 0)
+                    {
+                        owner.Rb.velocity += new Vector3(0, 50f * Time.deltaTime, 0);
+                    }
+                }
+                
+            }
+            //左を向いているとき
+            else
+            {
+                //左に入力していた場合
+                if (owner.InputEventProvider.MoveDirection.Value.x < 0)
+                {
+                    owner.Anim.SetBool("IsWallSliding", true);
+                    if (owner.Rb.velocity.y < 0)
+                    {
+                        owner.Rb.velocity += new Vector3(0, 50f * Time.deltaTime, 0);
+                    }
+                }
+            }
+        } else
+        {
+            owner.Anim.SetBool("IsWallSliding", false);
+        }
 
     }
 
@@ -84,6 +124,7 @@ public class StateJumping : PlayerStateBase
             if (owner.IsGrounded)
             {
                 owner.Anim.SetFloat("JumpSpeed", 0);
+                owner.Anim.SetBool("IsWallSliding", false);
                 owner.ChangeState(owner.StateStanding);
                 break;
             }
