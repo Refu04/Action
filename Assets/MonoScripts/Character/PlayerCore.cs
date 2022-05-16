@@ -99,7 +99,7 @@ public class PlayerCore : MonoBehaviour
     {
         isGrounded = Physics.BoxCast(
             transform.position - new Vector3(0, characterHeightOffset, 0),
-            new Vector3(1f, 0.2f, 1f),
+            new Vector3(0.3f, 0.2f, 1f),
             Vector3.down,
             out hit,
             transform.rotation,
@@ -112,7 +112,7 @@ public class PlayerCore : MonoBehaviour
     {
         if (isGrounded)
         {
-            Gizmos.DrawWireCube(transform.position + Vector3.down * hit.distance, new Vector3(1f, 0.2f, 1f));
+            Gizmos.DrawWireCube(transform.position + Vector3.down * hit.distance, new Vector3(0.3f, 0.2f, 1f));
         }
     }
 

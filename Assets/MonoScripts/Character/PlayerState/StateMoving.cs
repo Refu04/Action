@@ -27,7 +27,7 @@ public class StateMoving : PlayerStateBase
         }
         //ˆÚ“®ˆ—
         owner.Rb.velocity = new Vector3(
-            owner.InputEventProvider.MoveDirection.Value.x * 10f,
+            owner.InputEventProvider.MoveDirection.Value.x * 4f,
             owner.Rb.velocity.y,
             0);
 

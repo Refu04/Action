@@ -20,7 +20,7 @@ public class StateClimbing : PlayerStateBase
         {
             owner.Anim.SetBool("IsClimbing", false);
             owner.Anim.SetFloat("JumpSpeed", 0);
-            owner.transform.position = new Vector3(owner.transform.position.x + posOffset, owner.transform.position.y + 4.6f, owner.transform.position.z);
+            owner.transform.position = new Vector3(owner.transform.position.x + posOffset, owner.transform.position.y + 1.5f, owner.transform.position.z);
             owner.Rb.useGravity = true;
             owner.Col.enabled = true;
             owner.ChangeState(owner.StateStanding);

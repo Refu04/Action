@@ -36,10 +36,10 @@ public class StateJumping : PlayerStateBase
         //AnimatorのJumpSpeedパラメータに加速度の値を割り振る
         owner.Anim.SetFloat("JumpSpeed", owner.Rb.velocity.y);
         //崖捕まり判定
-        var startHeightOffset = 4f;
-        var armLength = 1f;
+        var startHeightOffset = 1.2f;
+        var armLength = 0.5f;
         var rayOffset = owner.IsRight ? -0.1f : 0.1f;
-        var posOffset = owner.IsRight ? -0.3f : 0.3f;
+        var posOffset = owner.IsRight ? -0f : 0f;
         //首辺りからrayを飛ばす
         Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right * armLength, Color.red);
         if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right, out hit, armLength))
@@ -51,7 +51,7 @@ public class StateJumping : PlayerStateBase
                 //2本目のrayが何にも当たらなければ崖捕まり
                  owner.transform.position = new Vector3(
                     hit.point.x + posOffset,
-                    hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2 - 4.9f,
+                    hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2 - 1.5f,
                     hit.point.z
                 );
                 //加速度を無くす
@@ -60,6 +60,7 @@ public class StateJumping : PlayerStateBase
                 owner.ChangeState(owner.StateClimbing);
             }
         }
+        //壁スライド判定
 
 
     }
@@ -76,12 +77,13 @@ public class StateJumping : PlayerStateBase
     {
         //ジャンプ直後に着地判定を行わないように遅らせる
         await UniTask.Delay(100);
-        while(true)
+        while (true)
         {
             await UniTask.Yield(PlayerLoopTiming.Update, token);
             //着地したらStateStandingに遷移する
             if (owner.IsGrounded)
             {
+                owner.Anim.SetFloat("JumpSpeed", 0);
                 owner.ChangeState(owner.StateStanding);
                 break;
             }
