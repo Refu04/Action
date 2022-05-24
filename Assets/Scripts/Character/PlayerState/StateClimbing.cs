@@ -19,7 +19,6 @@ public class StateClimbing : PlayerStateBase
         if (owner.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
         {
             owner.Anim.SetBool("IsClimbing", false);
-            owner.Anim.SetFloat("JumpSpeed", 0);
             owner.transform.position = new Vector3(owner.transform.position.x + posOffset, owner.transform.position.y + 1.5f, owner.transform.position.z);
             owner.Rb.useGravity = true;
             owner.Col.enabled = true;

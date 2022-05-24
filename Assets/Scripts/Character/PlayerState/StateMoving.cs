@@ -43,9 +43,14 @@ public class StateMoving : PlayerStateBase
             owner.ChangeState(owner.StateJumping);
         }
         //地面についていなかったらStateJumpingに遷移する
-        if (!owner.IsGrounded)
+        if (!owner.IsGrounded.Value)
         {
             owner.ChangeState(owner.StateJumping);
+        }
+        //移動スキルボタンが押されたらState***に遷移
+        if (owner.InputEventProvider.MoveSkill.Value)
+        {
+            owner.ChangeState(owner.StateBlinking);
         }
     }
 }

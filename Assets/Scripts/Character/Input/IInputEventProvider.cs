@@ -9,4 +9,6 @@ public interface IInputEventProvider
     IReadOnlyReactiveProperty<Vector3> MoveDirection { get; }
     //ジャンプ
     IReadOnlyReactiveProperty<bool> IsJumping { get; }
+    //移動スキル
+    IReadOnlyReactiveProperty<bool> MoveSkill { get; }
 }

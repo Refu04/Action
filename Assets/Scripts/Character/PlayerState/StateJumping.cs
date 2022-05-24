@@ -15,7 +15,7 @@ public class StateJumping : PlayerStateBase
     public override void OnEnter(PlayerCore owner, PlayerStateBase prevState)
     {
         //接地しているか
-        if(owner.IsGrounded)
+        if(owner.IsGrounded.Value)
         {
             //ジャンプ
             owner.Rb.velocity += Vector3.up * owner.JumpSpeed;
@@ -33,8 +33,6 @@ public class StateJumping : PlayerStateBase
 
     public override void OnUpdate(PlayerCore owner)
     {
-        //AnimatorのJumpSpeedパラメータに加速度の値を割り振る
-        owner.Anim.SetFloat("JumpSpeed", owner.Rb.velocity.y);
         //崖捕まり判定
         var startHeightOffset = 1.2f;
         var armLength = 0.5f;
@@ -60,16 +58,11 @@ public class StateJumping : PlayerStateBase
                 owner.ChangeState(owner.StateClimbing);
             }
         }
+        //他ステートに分ける
         //壁スライド判定
-        var slide = Physics.BoxCast(
-            owner.transform.position + new Vector3(0, 1.7f, 0),
-            new Vector3(0.1f, 1.5f, 1f),
-            -owner.transform.right,
-            owner.transform.rotation,
-            0.1f,
-            owner.GroundMask);
+        var slide = Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset + 0.1f, 0), -owner.transform.right, 0.2f);
         //壁スライド中の処理
-        if(slide)
+        if (slide)
         {
             //右を向いている時
             if(owner.IsRight)
@@ -102,7 +95,11 @@ public class StateJumping : PlayerStateBase
         {
             owner.Anim.SetBool("IsWallSliding", false);
         }
-
+        //移動スキルボタンが押されたらState***に遷移
+        if(owner.InputEventProvider.MoveSkill.Value && owner.MoveSkillCount < 1)
+        {
+            owner.ChangeState(owner.StateBlinking);
+        }
     }
 
     public override void OnExit(PlayerCore owner, PlayerStateBase nextState)
@@ -121,7 +118,7 @@ public class StateJumping : PlayerStateBase
         {
             await UniTask.Yield(PlayerLoopTiming.Update, token);
             //着地したらStateStandingに遷移する
-            if (owner.IsGrounded)
+            if (owner.IsGrounded.Value)
             {
                 owner.Anim.SetFloat("JumpSpeed", 0);
                 owner.Anim.SetBool("IsWallSliding", false);
