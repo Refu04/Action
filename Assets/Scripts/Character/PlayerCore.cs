@@ -87,7 +87,6 @@ public class PlayerCore : MonoBehaviour
         }
         //AnimatorのJumpSpeedパラメータに加速度の値を割り振る
         anim.SetFloat("JumpSpeed", rb.velocity.y);
-        Debug.Log(moveSkillCount);
     }
 
     //ステートの割当
