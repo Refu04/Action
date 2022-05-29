@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ˆÚ“®’†
+//ï¿½Ú“ï¿½ï¿½ï¿½
 public class StateMoving : PlayerStateBase
 {
     private float speed;
@@ -13,41 +13,41 @@ public class StateMoving : PlayerStateBase
 
     public override void OnUpdate(PlayerCore owner)
     {
-        //ƒXƒs[ƒh‚ÌŽæ“¾
+        //ï¿½Xï¿½sï¿½[ï¿½hï¿½ÌŽæ“¾
         var speed = owner.InputEventProvider.MoveDirection.Value.x;
-        //ƒAƒjƒ[ƒ^[‚ÉƒXƒs[ƒh’l‚ðƒZƒbƒg‚·‚é
+        //ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½^ï¿½[ï¿½ÉƒXï¿½sï¿½[ï¿½hï¿½lï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
         owner.Anim.SetFloat("Speed", Mathf.Abs(speed));
-        //¶‰E‚ÌŒü‚«‚ÌØ‚è‘Ö‚¦
+        //ï¿½ï¿½ï¿½Eï¿½ÌŒï¿½ï¿½ï¿½ï¿½ÌØ‚ï¿½Ö‚ï¿½
         if(speed > 0)
         {
-            owner.transform.rotation = Quaternion.Euler(0, 180, 0);
+            owner.transform.rotation = Quaternion.Euler(0, 90, 0);
         } else if(speed < 0)
         {
-            owner.transform.rotation = Quaternion.Euler(0, 0, 0);
+            owner.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
-        //ˆÚ“®ˆ—
+        //ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½
         owner.Rb.velocity = new Vector3(
             owner.InputEventProvider.MoveDirection.Value.x * 4f,
             owner.Rb.velocity.y,
             0);
 
-        //ƒXƒe[ƒg‘JˆÚˆ—
-        //ƒXƒs[ƒh‚ª‚O‚É‚È‚Á‚½‚çStateStanding‚É‘JˆÚ‚·‚é
+        //ï¿½Xï¿½eï¿½[ï¿½gï¿½Jï¿½Úï¿½ï¿½ï¿½
+        //ï¿½Xï¿½sï¿½[ï¿½hï¿½ï¿½ï¿½Oï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½ï¿½StateStandingï¿½É‘Jï¿½Ú‚ï¿½ï¿½ï¿½
         if (Mathf.Abs(speed) <= 0)
         {
             owner.ChangeState(owner.StateStanding);
         }
-        //ƒWƒƒƒ“ƒv‚µ‚½‚çStateJumping‚É‘JˆÚ‚·‚é
+        //ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½StateJumpingï¿½É‘Jï¿½Ú‚ï¿½ï¿½ï¿½
         if (owner.InputEventProvider.IsJumping.Value)
         {
             owner.ChangeState(owner.StateJumping);
         }
-        //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚©‚Á‚½‚çStateJumping‚É‘JˆÚ‚·‚é
+        //ï¿½nï¿½Ê‚É‚Â‚ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½StateJumpingï¿½É‘Jï¿½Ú‚ï¿½ï¿½ï¿½
         if (!owner.IsGrounded.Value)
         {
             owner.ChangeState(owner.StateJumping);
         }
-        //ˆÚ“®ƒXƒLƒ‹ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚çState***‚É‘JˆÚ
+        //ï¿½Ú“ï¿½ï¿½Xï¿½Lï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½State***ï¿½É‘Jï¿½ï¿½
         if (owner.InputEventProvider.MoveSkill.Value)
         {
             owner.ChangeState(owner.StateBlinking);
