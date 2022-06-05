@@ -11,7 +11,7 @@ public class StateBlinking : PlayerStateBase
         owner.Anim.SetBool("IsBlinking", true);
         owner.Rb.useGravity = false;
         time = 0;
-        if (owner.IsRight)
+        if (owner.InputEventProvider.MoveDirection.Value.x >= 0)
         {
             owner.Rb.velocity = new Vector3(10, 0, 0);
         } else

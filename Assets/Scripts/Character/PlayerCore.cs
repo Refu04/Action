@@ -77,11 +77,11 @@ public class PlayerCore : MonoBehaviour
         //’…’n”»’è
         CheckGrounded();
         //Œü‚«”»’è
-        if (transform.localEulerAngles.y == 180)
+        if (Mathf.Floor(transform.localEulerAngles.y) == 90)
         {
             isRight = true;
         }
-        else if (transform.localEulerAngles.y == 0)
+        else if (Mathf.Floor(transform.localEulerAngles.y) == 270)
         {
             isRight = false;
         }

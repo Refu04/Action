@@ -60,7 +60,7 @@ public class StateJumping : PlayerStateBase
         }
         //他ステートに分ける
         //壁スライド判定
-        var slide = Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset + 0.1f, 0), -owner.transform.right, 0.2f);
+        var slide = Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset + 0.1f, 0), owner.transform.forward, 0.2f);
         //壁スライド中の処理
         if (slide)
         {
