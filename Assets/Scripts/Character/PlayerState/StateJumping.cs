@@ -39,18 +39,18 @@ public class StateJumping : PlayerStateBase
         var rayOffset = owner.IsRight ? -0.1f : 0.1f;
         var posOffset = owner.IsRight ? -0f : 0f;
         //éÒï”ÇËÇ©ÇÁrayÇîÚÇŒÇ∑
-        Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right * armLength, Color.red);
-        if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), -owner.transform.right, out hit, armLength))
+        Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), owner.transform.forward * armLength, Color.red);
+        if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), owner.transform.forward, out hit, armLength))
         {
             //ì™ÇÃè„ï”ÇËÇ©ÇÁrayÇîÚÇŒÇ∑
-            if (!Physics.Raycast(new Vector3(owner.transform.position.x, hit.point.y + armLength + 0.5f, owner.transform.position.z), -owner.transform.right, 1f))
+            if (!Physics.Raycast(new Vector3(owner.transform.position.x, hit.point.y + armLength + 0.5f, owner.transform.position.z), owner.transform.forward, 1f))
             {
-                Debug.DrawRay(new Vector3(owner.transform.position.x, hit.point.y + armLength + 0.5f, owner.transform.position.z), -owner.transform.right * 1, Color.red);
+                Debug.DrawRay(new Vector3(owner.transform.position.x, hit.point.y + armLength + 0.5f, owner.transform.position.z), owner.transform.forward * 1, Color.red);
                 //2ñ{ñ⁄ÇÃrayÇ™âΩÇ…Ç‡ìñÇΩÇÁÇ»ÇØÇÍÇŒäRïﬂÇ‹ÇË
-                 owner.transform.position = new Vector3(
-                    hit.point.x + posOffset,
-                    hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2 - 1.5f,
-                    hit.point.z
+                owner.transform.position = new Vector3(
+                   hit.point.x + posOffset,
+                   hit.collider.transform.position.y + hit.collider.transform.localScale.y / 2 - 3.0f,
+                   hit.point.z
                 );
                 //â¡ë¨ìxÇñ≥Ç≠Ç∑
                 owner.Rb.velocity = Vector3.zero;
