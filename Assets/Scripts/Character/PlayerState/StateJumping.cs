@@ -58,42 +58,13 @@ public class StateJumping : PlayerStateBase
                 owner.ChangeState(owner.StateClimbing);
             }
         }
-        //他ステートに分ける
+
         //壁スライド判定
         var slide = Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset + 0.1f, 0), owner.transform.forward, 0.2f);
-        //壁スライド中の処理
-        if (slide)
+        //壁スライドステートに移行
+        if (slide && owner.InputEventProvider.MoveDirection.Value != Vector3.zero)
         {
-            //右を向いている時
-            if(owner.IsRight)
-            {
-                //右に入力していた場合
-                if(owner.InputEventProvider.MoveDirection.Value.x > 0)
-                {
-                    owner.Anim.SetBool("IsWallSliding", true);
-                    if (owner.Rb.velocity.y < 0)
-                    {
-                        owner.Rb.velocity += new Vector3(0, 50f * Time.deltaTime, 0);
-                    }
-                }
-                
-            }
-            //左を向いているとき
-            else
-            {
-                //左に入力していた場合
-                if (owner.InputEventProvider.MoveDirection.Value.x < 0)
-                {
-                    owner.Anim.SetBool("IsWallSliding", true);
-                    if (owner.Rb.velocity.y < 0)
-                    {
-                        owner.Rb.velocity += new Vector3(0, 50f * Time.deltaTime, 0);
-                    }
-                }
-            }
-        } else
-        {
-            owner.Anim.SetBool("IsWallSliding", false);
+            owner.ChangeState(owner.StateWallSliding);
         }
         //移動スキルボタンが押されたらState***に遷移
         if(owner.InputEventProvider.MoveSkill.Value && owner.MoveSkillCount < 1)

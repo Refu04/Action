@@ -11,7 +11,7 @@ public class PlayerCore : MonoBehaviour
     public PlayerStateBase StateJumping { get; set; } = new StateJumping();
     public PlayerStateBase StateClimbing { get; set; } = new StateClimbing();
     public PlayerStateBase StateBlinking { get; set; } = new StateBlinking();
-
+    public PlayerStateBase StateWallSliding { get; set; } = new StateWallSliding();
     //現在のステート
     private PlayerStateBase currentState;
     //アニメーターコントローラー
