@@ -14,15 +14,16 @@ public class StateWallSliding : PlayerStateBase
 
     public override void OnUpdate(PlayerCore owner)
     {
-        if(owner.InputEventProvider.MoveDirection.Value != Vector3.zero)
+        if (owner.IsRight && owner.InputEventProvider.MoveDirection.Value.x > 0 || !owner.IsRight && owner.InputEventProvider.MoveDirection.Value.x < 0)
         {
             owner.transform.Translate(0, -0.2f * Time.deltaTime, 0);
-        } else
+        }
+        else
         {
             owner.ChangeState(owner.StateStanding);
         }
 
-        if(owner.InputEventProvider.IsJumping.Value)
+        if (owner.InputEventProvider.IsJumping.Value)
         {
             owner.ChangeState(owner.StateJumping);
         }
