@@ -12,26 +12,30 @@ public class StateStanding : PlayerStateBase
 
     public override void OnUpdate(PlayerCore owner)
     {
-        //移動キーが押されていればStateMovingに遷移する
+        //?????L?[????????????????StateMoving???J??????
         if (Mathf.Abs(owner.InputEventProvider.MoveDirection.Value.x) > 0)
         {
             owner.ChangeState(owner.StateMoving);
         }
-        //スピードの取得
+        //?X?s?[?h??????
         var speed = owner.InputEventProvider.MoveDirection.Value.x;
-        //アニメーターにスピード値をセットする
+        //?A?j???[?^?[???X?s?[?h?l???Z?b?g????
         owner.Anim.SetFloat("Speed", Mathf.Abs(speed));
 
-        //ステート遷移処理
-        //ジャンプしたらStateJumpingに遷移する
+        //?X?e?[?g?J??????
+        //?W?????v??????StateJumping???J??????
         if (owner.InputEventProvider.IsJumping.Value)
         {
             owner.ChangeState(owner.StateJumping);
         }
-        //移動スキルボタンが押されたらState***に遷移
+        //?????X?L???{?^??????????????State***???J??
         if (owner.InputEventProvider.MoveSkill.Value && owner.MoveSkillCount < 1)
         {
             owner.ChangeState(owner.StateBlinking);
+        }
+        if(owner.InputEventProvider.IsAttacking.Value)
+        {
+            owner.ChangeState(owner.StateAttacking);
         }
     }
 }

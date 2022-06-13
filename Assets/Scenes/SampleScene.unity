@@ -1041,6 +1041,49 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &832418641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 832418643}
+  - component: {fileID: 832418642}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &832418642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832418641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ed8fe6f6e51774a8ca0fe7294d16ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &832418643
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832418641}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 343.3327, y: 316.85797, z: -47.775105}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &849318729
 GameObject:
   m_ObjectHideFlags: 0
@@ -2421,6 +2464,126 @@ PrefabInstance:
     - target: {fileID: 213883040122917239, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: combo
+      value: 
+      objectReference: {fileID: 11400000, guid: c96f827eb97b84a47be3249b4109287b, type: 2}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: acceptTime.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: acceptTime.Array.data[1]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: acceptTime.Array.data[2]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: acceptTime.Array.data[3]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: inputStartTime.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: inputStartTime.Array.data[1]
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: inputStartTime.Array.data[2]
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: inputStartTime.Array.data[3]
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].acceptTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[1].acceptTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[2].acceptTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].inputStartTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[1].inputStartTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[2].inputStartTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].OnAttack.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 832418642}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AttackEvents, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291138, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: acceptTime.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291138, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: acceptTime.Array.data[1]
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291138, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: acceptTime.Array.data[2]
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291138, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: acceptTime.Array.data[3]
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291138, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: inputStartTime.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291138, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: inputStartTime.Array.data[1]
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291138, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: inputStartTime.Array.data[2]
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291138, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: inputStartTime.Array.data[3]
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 701450835354291139, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
       propertyPath: m_UseGravity

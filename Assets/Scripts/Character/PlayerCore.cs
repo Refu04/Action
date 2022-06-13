@@ -1,20 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UniRx;
+
+
+[System.Serializable]
+public class AttackEvent : UnityEvent<PlayerCore> { }
+
+[System.Serializable]
+public class AttackBase
+{
+    public float inputStartTime;
+    public float acceptTime;
+    public AttackEvent OnAttack;
+}
 
 public class PlayerCore : MonoBehaviour
 {
-    //ステートのインスタンス
+    //?X?e?[?g???C???X?^???X
     public PlayerStateBase StateStanding { get; set; } = new StateStanding();
     public PlayerStateBase StateMoving { get; set; } = new StateMoving();
     public PlayerStateBase StateJumping { get; set; } = new StateJumping();
     public PlayerStateBase StateClimbing { get; set; } = new StateClimbing();
     public PlayerStateBase StateBlinking { get; set; } = new StateBlinking();
     public PlayerStateBase StateWallSliding { get; set; } = new StateWallSliding();
-    //現在のステート
+    public PlayerStateBase StateAttacking { get; set; } = new StateAttacking();
+    //???????X?e?[?g
     private PlayerStateBase currentState;
-    //アニメーターコントローラー
+    //?A?j???[?^?[?R???g???[???[
     [SerializeField]
     private Animator anim;
     public Animator Anim => anim;
@@ -23,47 +37,55 @@ public class PlayerCore : MonoBehaviour
     private Rigidbody rb;
     public Rigidbody Rb => rb;
 
-    //当たり判定
+    //??????????
     [SerializeField]
     private BoxCollider col;
     public BoxCollider Col => col;
 
-    //向き
+    //????
     private bool isRight;
     public bool IsRight => isRight;
 
-    //各種パラメータ
-    //ジャンプスピード
+    //?e???p?????[?^
+    //?W?????v?X?s?[?h
     [SerializeField]
     private float jumpSpeed;
     public float JumpSpeed => jumpSpeed;
 
-    //Raycast時のプレイヤの高さを補正する
+    //Raycast?????v???C??????????????????
     [SerializeField]
     private float characterHeightOffset;
-    //接地判定に使うレイヤ
+    //???n???????g?????C??
     [SerializeField]
     private LayerMask groundMask;
     public LayerMask GroundMask => groundMask;
     RaycastHit hit;
 
-    //移動スキル発動回数
+    //?????X?L??????????
     private int moveSkillCount;
     public int MoveSkillCount => moveSkillCount;
-    //着地判定
+    //???n????
     private readonly ReactiveProperty<bool> isGrounded = new ReactiveProperty<bool>();
     public IReadOnlyReactiveProperty<bool> IsGrounded => isGrounded;
-    //入力イベント
+    //?????C?x???g
     public IInputEventProvider InputEventProvider { get; set; }
+
+    
+
+    [SerializeField]
+    public AttackBase[] attackDataList = new AttackBase[3];
+    //private ComboDataAsset combo;
+    //public ComboDataAsset Combo => combo;
+
     void Start()
     {
-        //初期ステートの設定
+        //?????X?e?[?g??????
         currentState = StateStanding;
         currentState.OnEnter(this, null);
-        //入力イベントの取得
+        //?????C?x???g??????
         InputEventProvider = GetComponent<IInputEventProvider>();
-        //着地時の処理
-        //移動スキル使用回数リセット
+        //???n????????
+        //?????X?L???g?p???????Z?b?g
         isGrounded
             .Where(x => x)
             .Subscribe(_ => moveSkillCount = 0);
@@ -71,12 +93,12 @@ public class PlayerCore : MonoBehaviour
 
     void Update()
     {
-        //現在のステートのUpdate呼び出し
+        //???????X?e?[?g??Update?????o??
         currentState.OnUpdate(this);
-        //ステートに関わらず行う処理
-        //着地判定
+        //?X?e?[?g???????????s??????
+        //???n????
         CheckGrounded();
-        //向き判定
+        //????????
         if (Mathf.Floor(transform.localEulerAngles.y) == 90)
         {
             isRight = true;
@@ -85,23 +107,23 @@ public class PlayerCore : MonoBehaviour
         {
             isRight = false;
         }
-        //AnimatorのJumpSpeedパラメータに加速度の値を割り振る
+        //Animator??JumpSpeed?p?????[?^???????x???l???????U??
         anim.SetFloat("JumpSpeed", rb.velocity.y);
     }
 
-    //ステートの割当
+    //?X?e?[?g??????
     public void AssignState(PlayerStateBase stateStanding, PlayerStateBase stateMoving)
     {
         StateStanding = stateStanding;
         StateMoving = stateMoving;
     }
 
-    //ステート変更
+    //?X?e?[?g???X
     public void ChangeState(PlayerStateBase nextState)
     {
-        //前のステート終了時の処理
+        //?O???X?e?[?g?I??????????
         currentState.OnExit(this, nextState);
-        //次のステート開始時の処理
+        //?????X?e?[?g?J?n????????
         nextState.OnEnter(this, currentState);
         currentState = nextState;
         if(nextState == StateBlinking)

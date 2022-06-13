@@ -5,10 +5,12 @@ using UniRx;
 
 public interface IInputEventProvider
 {
-    //移動操作
+    //????????
     IReadOnlyReactiveProperty<Vector3> MoveDirection { get; }
-    //ジャンプ
+    //?W?????v
     IReadOnlyReactiveProperty<bool> IsJumping { get; }
-    //移動スキル
+    //?????X?L??
     IReadOnlyReactiveProperty<bool> MoveSkill { get; }
+    //
+    IReadOnlyReactiveProperty<bool> IsAttacking { get; }
 }

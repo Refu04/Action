@@ -52,5 +52,9 @@ public class StateMoving : PlayerStateBase
         {
             owner.ChangeState(owner.StateBlinking);
         }
+        if (owner.InputEventProvider.IsAttacking.Value)
+        {
+            owner.ChangeState(owner.StateAttacking);
+        }
     }
 }
