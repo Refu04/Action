@@ -20,10 +20,10 @@ public class BGManager : MonoBehaviour
         prevPos = Camera.main.transform.position;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         //ƒJƒƒ‰‚ª‰¡•ûŒü‚É“®‚¢‚Ä‚¢‚ê‚Î
-        if (Mathf.Floor(prevPos.x * 100) / 100 != Mathf.Floor(Camera.main.transform.position.x * 100) / 100)
+        if (/*Mathf.Floor(prevPos.x * 100) / 100 != Mathf.Floor(Camera.main.transform.position.x * 100) / 100*/ prevPos.x != Camera.main.transform.position.x)
         {
             //¶‚É“®‚¢‚Ä‚¢‚éê‡
             if(prevPos.x >= Camera.main.transform.position.x)

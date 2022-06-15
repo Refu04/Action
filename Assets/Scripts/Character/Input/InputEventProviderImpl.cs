@@ -14,21 +14,7 @@ public class InputEventProviderImpl : MonoBehaviour, IInputEventProvider
     private readonly ReactiveProperty<bool> isJumping = new ReactiveProperty<bool>();
     private readonly ReactiveProperty<bool> moveSkill = new ReactiveProperty<bool>();
     private readonly ReactiveProperty<bool> isAttacking = new ReactiveProperty<bool>();
-
-    //???????????????????????????????????????????
-    //??????
-    [SerializeField]
-    private float[] acceptTime;
-    //????????
-    [SerializeField]
-    private float[] inputStartTime;
-    //????????
-    private float comboTimeCount;
-
-    private void Start()
-    {
-        //attackNum.Subscribe(_ => comboTimeCount = 0);
-    }
+    
 
     private void Update()
     {
@@ -39,31 +25,5 @@ public class InputEventProviderImpl : MonoBehaviour, IInputEventProvider
         //???????????????l?????m????
         move.SetValueAndForceNotify(new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")));
         isAttacking.Value = Input.GetMouseButtonDown(0);
-        ////????
-        //if(Input.GetMouseButtonDown(0) && attackNum.Value < acceptTime.Length - 1)
-        //{
-        //    if(attackNum.Value == 0)
-        //    {
-        //        attackNum.Value++;
-        //    } else
-        //    {
-        //        if(comboTimeCount > inputStartTime[attackNum.Value])
-        //        {
-        //            attackNum.Value++;
-        //        }
-        //    }
-            
-        //}
-
-        ////????????????????
-        //if(attackNum.Value > 0)
-        //{
-        //    comboTimeCount += Time.deltaTime;
-        //    if(comboTimeCount >= acceptTime[AttackNum.Value])
-        //    {
-        //        comboTimeCount = 0;
-        //        attackNum.Value = 0;
-        //    }
-        //}
     }
 }

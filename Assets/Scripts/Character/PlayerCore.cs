@@ -74,8 +74,6 @@ public class PlayerCore : MonoBehaviour
 
     [SerializeField]
     public AttackBase[] attackDataList = new AttackBase[3];
-    //private ComboDataAsset combo;
-    //public ComboDataAsset Combo => combo;
 
     void Start()
     {
@@ -136,7 +134,7 @@ public class PlayerCore : MonoBehaviour
     {
         isGrounded.Value = Physics.BoxCast(
             transform.position - new Vector3(0, characterHeightOffset, 0),
-            new Vector3(0.3f, 0.2f, 1f),
+            new Vector3(0.1f, 0.1f, 1f),
             Vector3.down,
             out hit,
             transform.rotation,
@@ -150,7 +148,7 @@ public class PlayerCore : MonoBehaviour
     {
         if (isGrounded.Value)
         {
-            Gizmos.DrawWireCube(transform.position + Vector3.down * hit.distance, new Vector3(0.3f, 0.2f, 1f));
+            Gizmos.DrawWireCube(transform.position + Vector3.down * hit.distance, new Vector3(0.1f, 0.1f, 1f));
         }
     }
 

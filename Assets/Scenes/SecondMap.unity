@@ -470,7 +470,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1913909845}
 --- !u!23 &121831198
@@ -3934,7 +3934,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 658648963}
 --- !u!23 &1508496439
@@ -5365,6 +5365,38 @@ PrefabInstance:
     - target: {fileID: 213883040122917239, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: characterHeightOffset
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].acceptTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[1].acceptTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[2].acceptTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[0].inputStartTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[1].inputStartTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291137, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: attackDataList.Array.data[2].inputStartTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 701450835354291148, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
+      propertyPath: m_Center.y
+      value: 2.35
       objectReference: {fileID: 0}
     - target: {fileID: 701450835354291149, guid: bcba021b01b5e604387c71bce985a5e5, type: 3}
       propertyPath: m_Name

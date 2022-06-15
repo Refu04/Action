@@ -25,7 +25,6 @@ public class StateAttacking : PlayerStateBase
     {
         comboTimeCount += Time.deltaTime;
         owner.Anim.SetInteger("AttackNum", attackNum);
-
     }
 
     public override void OnExit(PlayerCore owner, PlayerStateBase nextState)
