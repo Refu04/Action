@@ -69,7 +69,7 @@ public class StateJumping : PlayerStateBase
                     Debug.DrawRay(new Vector3(owner.transform.position.x, wallHit.point.y + armLength + 0.5f, owner.transform.position.z), owner.transform.forward * 1, Color.red);
                     //2本目のrayが何にも当たらなければ
                     //2本目のrayの到達地点から真下に向かって3本目のrayを出す
-                    if (Physics.Raycast(new Vector3(owner.transform.position.x + posOffset, wallHit.point.y + armLength + 0.5f, owner.transform.position.z), Vector3.down, out cliffHit, armLength + 0.5f))
+                    if (Physics.Raycast(new Vector3(owner.transform.position.x + posOffset, wallHit.point.y + armLength + 0.5f, owner.transform.position.z), Vector3.down, out cliffHit, armLength + 0.6f))
                     {
                         owner.transform.position = new Vector3(
                             wallHit.point.x,
@@ -112,7 +112,7 @@ public class StateJumping : PlayerStateBase
                 break;
             }
             //壁スライド判定
-            var slide = Physics.Raycast(owner.transform.position + new Vector3(0, 1.3f, 0), owner.transform.forward, 0.2f);
+            var slide = Physics.Raycast(owner.transform.position + new Vector3(0, 1.4f, 0), owner.transform.forward, 0.2f);
             //壁スライドステートに移行
             if (slide && owner.InputEventProvider.MoveDirection.Value != Vector3.zero)
             {

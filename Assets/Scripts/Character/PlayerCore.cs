@@ -58,12 +58,16 @@ public class PlayerCore : MonoBehaviour
     //???n???????g?????C??
     [SerializeField]
     private LayerMask groundMask;
-    public LayerMask GroundMask => groundMask;
+    public LayerMask GroundMask;
     RaycastHit hit;
 
     //?????X?L??????????
     private int moveSkillCount;
-    public int MoveSkillCount => moveSkillCount;
+    public int MoveSkillCount
+    {
+        get { return moveSkillCount; }
+        set { moveSkillCount = value; }
+    }
     //???n????
     private readonly ReactiveProperty<bool> isGrounded = new ReactiveProperty<bool>();
     public IReadOnlyReactiveProperty<bool> IsGrounded => isGrounded;

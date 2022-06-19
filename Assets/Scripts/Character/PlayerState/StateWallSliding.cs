@@ -9,6 +9,7 @@ public class StateWallSliding : PlayerStateBase
         owner.Rb.useGravity = false;
         owner.Rb.velocity = Vector3.zero;
         owner.Anim.SetBool("IsWallSliding", true);
+        owner.MoveSkillCount = 0;
         Debug.Log("StateWallSliding");
     }
 
