@@ -54,7 +54,7 @@ public class StateJumping : PlayerStateBase
     {
         if(owner.Rb.velocity.y < 0)
         {
-            //崖捕まり判定
+            //崖掴まり判定
             var startHeightOffset = 1.2f;
             var armLength = 0.5f;
             var rayOffset = owner.IsRight ? -0.1f : 0.1f;
@@ -63,6 +63,11 @@ public class StateJumping : PlayerStateBase
             Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), owner.transform.forward * armLength, Color.red);
             if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), owner.transform.forward, out wallHit, armLength))
             {
+                //Staticでなければ掴まない
+                if(!wallHit.collider.gameObject.isStatic)
+                {
+                    return;
+                }
                 //頭の上辺りからrayを飛ばす
                 if (!Physics.Raycast(new Vector3(owner.transform.position.x, wallHit.point.y + armLength + 0.5f, owner.transform.position.z), owner.transform.forward, 1f))
                 {
@@ -112,7 +117,7 @@ public class StateJumping : PlayerStateBase
                 break;
             }
             //壁スライド判定
-            var slide = Physics.Raycast(owner.transform.position + new Vector3(0, 1.4f, 0), owner.transform.forward, 0.2f);
+            var slide = Physics.Raycast(owner.transform.position + new Vector3(0, 1.4f, 0), owner.transform.forward, 0.2f, owner.GroundMask);
             //壁スライドステートに移行
             if (slide && owner.InputEventProvider.MoveDirection.Value != Vector3.zero)
             {

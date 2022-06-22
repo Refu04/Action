@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +25,11 @@ public class StateStanding : PlayerStateBase
         //?X?e?[?g?J??????
         //?W?????v??????StateJumping???J??????
         if (owner.InputEventProvider.IsJumping.Value)
+        {
+            owner.ChangeState(owner.StateJumping);
+        }
+        //�n�ʂɂ��Ă��Ȃ�������StateJumping�ɑJ�ڂ���
+        if (!owner.IsGrounded.Value)
         {
             owner.ChangeState(owner.StateJumping);
         }
