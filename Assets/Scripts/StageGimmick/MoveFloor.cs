@@ -5,14 +5,36 @@ public class MoveFloor : MonoBehaviour
 {
     [SerializeField]
     private float movingWidth;
-    private Rigidbody rb;
+    [SerializeField]
+    private float movingHeight;
+    private bool isOnPlayer;
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        isOnPlayer = false;
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(new Vector3(transform.position.x + (Mathf.Sin(Time.time) / 100) * movingWidth, transform.position.y, transform.position.z));
+        transform.Translate((Mathf.Sin(Time.time) / 100) * movingWidth, (Mathf.Sin(Time.time) / 100) * movingHeight, 0);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Player" && !isOnPlayer)
+        {
+            var emptyObj = new GameObject();
+            collision.transform.parent = emptyObj.transform;
+            emptyObj.transform.parent = transform;
+            isOnPlayer = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if(collision.transform.tag == "Player")
+        {
+            collision.transform.parent = null;
+            isOnPlayer = false;
+        }
     }
 }

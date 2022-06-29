@@ -23,11 +23,8 @@ public class FallFloor : MonoBehaviour
     private async UniTask Fall(CancellationToken token)
     {
         await UniTask.Delay(waitTime);
-        while(true)
-        {
-            await UniTask.WaitForFixedUpdate();
-            transform.Translate(0, -0.1f, 0);
-        }
-        
+        gameObject.SetActive(false);
+        await UniTask.Delay(3000);
+        gameObject.SetActive(true);
     }
 }

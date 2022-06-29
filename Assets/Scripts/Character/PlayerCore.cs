@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,6 +62,18 @@ public class PlayerCore : MonoBehaviour
     public LayerMask GroundMask => groundMask;
     RaycastHit hit;
 
+    //プレイヤーHP
+    private readonly IntReactiveProperty hp = new IntReactiveProperty();
+    public IReadOnlyReactiveProperty<int> HP => hp;
+
+    //死亡通知Subject
+    private readonly Subject<Unit> deadSubject = new Subject<Unit>();
+    //死亡通知
+    public IObservable<Unit> OnDead => deadSubject;
+
+    //死亡時リスポーンポイント
+    private Vector3 respawnPoint;
+
     //?????X?L??????????
     private int moveSkillCount;
     public int MoveSkillCount
@@ -91,6 +104,14 @@ public class PlayerCore : MonoBehaviour
         isGrounded
             .Where(x => x)
             .Subscribe(_ => moveSkillCount = 0);
+        //体力が０になったら死亡する
+        hp.Where(x => x <= 0)
+          .Subscribe(_ => {
+              deadSubject.OnNext(Unit.Default);
+          });
+        deadSubject.Subscribe(_ => Dead());
+        //リスポーンポイント設定
+        respawnPoint = transform.position;
     }
 
     void Update()
@@ -138,7 +159,7 @@ public class PlayerCore : MonoBehaviour
     {
         isGrounded.Value = Physics.BoxCast(
             transform.position - new Vector3(0, characterHeightOffset, 0),
-            new Vector3(0.1f, 0.1f, 1f),
+            new Vector3(0.32f, 0.1f, 1f),
             Vector3.down,
             out hit,
             transform.rotation,
@@ -152,9 +173,32 @@ public class PlayerCore : MonoBehaviour
     {
         if (isGrounded.Value)
         {
-            Gizmos.DrawWireCube(transform.position + Vector3.down * hit.distance, new Vector3(0.1f, 0.1f, 1f));
+            Gizmos.DrawWireCube(transform.position + Vector3.down * hit.distance, new Vector3(0.32f, 0.1f, 1f));
         }
     }
 
-    
+    private void Dead()
+    {
+        Debug.Log("死亡");
+        //リセット処理
+        transform.position = respawnPoint;
+        hp.Value = 100;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "CheckPoint")
+        {
+            respawnPoint = other.gameObject.transform.position;
+            Debug.Log("チェックポイント更新");
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Spike")
+        {
+            hp.Value = -1;
+        }
+    }
 }

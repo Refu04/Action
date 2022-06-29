@@ -15,6 +15,7 @@ public class StateAttacking : PlayerStateBase
         attackNum = 0;
         attack = false;
         comboTimeCount = 0;
+        owner.Rb.velocity = Vector3.zero;
         var cts = new CancellationTokenSource();
         OnAttack(owner, cts.Token).Forget();
         Debug.Log("StateAttacking");

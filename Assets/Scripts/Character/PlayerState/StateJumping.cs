@@ -12,6 +12,7 @@ public class StateJumping : PlayerStateBase
     private CancellationTokenSource cts;
     private RaycastHit wallHit;
     private RaycastHit cliffHit;
+    private bool canMove = true;
 
     public override void OnEnter(PlayerCore owner, PlayerStateBase prevState)
     {
@@ -27,17 +28,18 @@ public class StateJumping : PlayerStateBase
             //壁ジャンプ
             owner.Rb.velocity = Vector3.zero;
             owner.Rb.velocity += Vector3.up * owner.JumpSpeed;
-            if(owner.IsRight)
+            canMove = false;
+            toggleCanMove(400, 0).Forget();
+            if (owner.IsRight)
             {
-                owner.Rb.velocity += Vector3.left * (owner.JumpSpeed / 2);
+                owner.Rb.velocity += Vector3.left * (owner.JumpSpeed / 3);
                 owner.transform.rotation = Quaternion.Euler(0, -90, 0);
             } else
             {
-                owner.Rb.velocity += Vector3.right * (owner.JumpSpeed / 2);
+                owner.Rb.velocity += Vector3.right * (owner.JumpSpeed / 3);
                 owner.transform.rotation = Quaternion.Euler(0, 90, 0);
             }
             
-            Debug.Log("壁ジャン");
         }
         //CancellationTokenSourceの生成
         cts = new CancellationTokenSource();
@@ -52,7 +54,28 @@ public class StateJumping : PlayerStateBase
 
     public override void OnUpdate(PlayerCore owner)
     {
-        if(owner.Rb.velocity.y < 0)
+        if(canMove)
+        {
+            //移動処理
+            var xInput = owner.InputEventProvider.MoveDirection.Value.x;
+            if (xInput > 0)
+            {
+                owner.transform.rotation = Quaternion.Euler(0, 90, 0);
+                owner.Rb.velocity = new Vector3(0, owner.Rb.velocity.y, 0);
+            }
+            else if (xInput < 0)
+            {
+                owner.transform.rotation = Quaternion.Euler(0, -90, 0);
+                owner.Rb.velocity = new Vector3(0, owner.Rb.velocity.y, 0);
+            }
+            if(owner.Rb.velocity.x <= 4 && owner.Rb.velocity.x >= -4)
+            {
+                owner.Rb.velocity += new Vector3(xInput * 4, 0, 0);
+            }
+            
+        }
+        
+        if (owner.Rb.velocity.y < 0)
         {
             //崖掴まり判定
             var startHeightOffset = 1.2f;
@@ -97,9 +120,12 @@ public class StateJumping : PlayerStateBase
     {
         //重力の設定を戻す
         owner.Rb.useGravity = true;
+        //止まる
+        owner.Rb.velocity = Vector3.zero;
         //UniTaskをキャンセルする
         cts.Cancel();
     }
+    
 
     private async UniTask CheckGrounded(PlayerCore owner, CancellationToken token)
     {
@@ -108,6 +134,7 @@ public class StateJumping : PlayerStateBase
         while (true)
         {
             await UniTask.Yield(PlayerLoopTiming.Update, token);
+            
             //着地したらStateStandingに遷移する
             if (owner.IsGrounded.Value)
             {
@@ -117,11 +144,15 @@ public class StateJumping : PlayerStateBase
                 break;
             }
             //壁スライド判定
-            var slide = Physics.Raycast(owner.transform.position + new Vector3(0, 1.4f, 0), owner.transform.forward, 0.2f, owner.GroundMask);
+            RaycastHit wallSlideHit;
+            var slide = Physics.Raycast(owner.transform.position + new Vector3(0, 1.4f, 0), owner.transform.forward, out wallSlideHit, 0.2f, owner.GroundMask);
             //壁スライドステートに移行
-            if (slide && owner.InputEventProvider.MoveDirection.Value != Vector3.zero)
+            if (slide && wallSlideHit.transform.gameObject.isStatic)
             {
-                owner.ChangeState(owner.StateWallSliding);
+                if(owner.InputEventProvider.MoveDirection.Value.x != 0)
+                {
+                    owner.ChangeState(owner.StateWallSliding);
+                }
             }
             //移動スキルボタンが押されたらState***に遷移
             if (owner.InputEventProvider.MoveSkill.Value && owner.MoveSkillCount < 1)
@@ -140,5 +171,18 @@ public class StateJumping : PlayerStateBase
             //重力をかける
             owner.Rb.AddForce(new Vector3(0, -38f, 0), ForceMode.Acceleration);
         }
+    }
+
+    private async UniTask toggleCanMove(int beforeDelay, int afterDelay)
+    {
+        await UniTask.Delay(beforeDelay);
+        if(canMove)
+        {
+            canMove = false;
+        } else
+        {
+            canMove = true;
+        }
+        await UniTask.Delay(afterDelay);
     }
 }
