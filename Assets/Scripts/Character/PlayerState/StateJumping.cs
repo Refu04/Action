@@ -61,20 +61,28 @@ public class StateJumping : PlayerStateBase
             
             if (owner.Rb.velocity.x <= 4 && owner.Rb.velocity.x >= -4)
             {
-                owner.Rb.velocity = new Vector3(xInput * 4, owner.Rb.velocity.y, 0);
-                //振り返った時の処理
-                if (xInput > 0)
-                {
-                    owner.transform.rotation = Quaternion.Euler(0, 90, 0);
-                    //owner.Rb.velocity = new Vector3(0, owner.Rb.velocity.y, 0);
-                }
-                else if (xInput < 0)
-                {
-                    owner.transform.rotation = Quaternion.Euler(0, -90, 0);
-                    //owner.Rb.velocity = new Vector3(0, owner.Rb.velocity.y, 0);
-                }
+                owner.Rb.velocity += new Vector3(xInput, 0, 0);
             }
-            
+            //MAXスピードを超えている時に
+            //進んでいる方向とは反対方向に進む場合
+            if(owner.Rb.velocity.x > 4 && xInput < 0)
+            {
+                owner.Rb.velocity += new Vector3(xInput, 0, 0);
+            }
+            if (owner.Rb.velocity.x < -4 && xInput > 0)
+            {
+                owner.Rb.velocity += new Vector3(xInput, 0, 0);
+            }
+            //振り返った時の処理
+            if (xInput > 0)
+            {
+                owner.transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+            else if (xInput < 0)
+            {
+                owner.transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
+
         }
         
         if (owner.Rb.velocity.y < 0)

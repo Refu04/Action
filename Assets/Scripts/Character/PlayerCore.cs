@@ -15,6 +15,7 @@ public class AttackBase
     public float inputStartTime;
     public float acceptTime;
     public AttackEvent OnAttack;
+
 }
 
 public class PlayerCore : MonoBehaviour

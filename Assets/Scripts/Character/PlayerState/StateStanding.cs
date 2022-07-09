@@ -8,6 +8,10 @@ public class StateStanding : PlayerStateBase
     {
         Debug.Log("StateStanding");
         owner.Anim.SetFloat("JumpSpeed", 0);
+        if(owner.IsGrounded.Value)
+        {
+            owner.MoveSkillCount = 0;
+        }
     }
 
     public override void OnUpdate(PlayerCore owner)
