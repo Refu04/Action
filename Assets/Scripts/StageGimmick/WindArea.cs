@@ -14,12 +14,25 @@ public class WindArea : MonoBehaviour
         if(other.tag == "Player")
         {
             var rb = other.GetComponent<Rigidbody>();
+            
+            
             if(x)
             {
-                rb.velocity = new Vector3(force, rb.velocity.y, 0);
+                    rb.AddForce(force, rb.velocity.y, 0);
+                
             } else
             {
-                rb.velocity = new Vector3(rb.velocity.x, force, 0);
+                rb.AddForce(rb.velocity.x, force, 0);
+                //óéâ∫êßå¿
+                //if (rb.velocity.y <= -8f)
+                //{
+                //    rb.velocity = new Vector3(0f, -8f, 0f);
+                //}
+                //è„è∏êßå¿
+                if (rb.velocity.y >= 14)
+                {
+                    rb.velocity = new Vector3(0f, 14f, 0f);
+                }
             }
             
         }

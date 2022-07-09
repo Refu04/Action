@@ -67,9 +67,9 @@ public class PlayerCore : MonoBehaviour
     public IReadOnlyReactiveProperty<int> HP => hp;
 
     //死亡通知Subject
-    private readonly Subject<Unit> deadSubject = new Subject<Unit>();
+    private static readonly Subject<Unit> deadSubject = new Subject<Unit>();
     //死亡通知
-    public IObservable<Unit> OnDead => deadSubject;
+    public static IObservable<Unit> OnDead => deadSubject;
 
     //死亡時リスポーンポイント
     private Vector3 respawnPoint;
@@ -132,6 +132,11 @@ public class PlayerCore : MonoBehaviour
         }
         //Animator??JumpSpeed?p?????[?^???????x???l???????U??
         anim.SetFloat("JumpSpeed", rb.velocity.y);
+        //落下し
+        if(transform.position.y < -10)
+        {
+            deadSubject.OnNext(Unit.Default);
+        }
     }
 
     //?X?e?[?g??????
