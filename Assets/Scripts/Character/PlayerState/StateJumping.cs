@@ -58,21 +58,31 @@ public class StateJumping : PlayerStateBase
         {
             //移動処理
             var xInput = owner.InputEventProvider.MoveDirection.Value.x;
+            
+            if (owner.Rb.velocity.x <= 4 && owner.Rb.velocity.x >= -4)
+            {
+                owner.Rb.velocity += new Vector3(xInput, 0, 0);
+            }
+            //MAXスピードを超えている時に
+            //進んでいる方向とは反対方向に進む場合
+            if(owner.Rb.velocity.x > 4 && xInput < 0)
+            {
+                owner.Rb.velocity += new Vector3(xInput, 0, 0);
+            }
+            if (owner.Rb.velocity.x < -4 && xInput > 0)
+            {
+                owner.Rb.velocity += new Vector3(xInput, 0, 0);
+            }
+            //振り返った時の処理
             if (xInput > 0)
             {
                 owner.transform.rotation = Quaternion.Euler(0, 90, 0);
-                owner.Rb.velocity = new Vector3(0, owner.Rb.velocity.y, 0);
             }
             else if (xInput < 0)
             {
                 owner.transform.rotation = Quaternion.Euler(0, -90, 0);
-                owner.Rb.velocity = new Vector3(0, owner.Rb.velocity.y, 0);
             }
-            if(owner.Rb.velocity.x <= 4 && owner.Rb.velocity.x >= -4)
-            {
-                owner.Rb.velocity += new Vector3(xInput * 4, 0, 0);
-            }
-            
+
         }
         
         if (owner.Rb.velocity.y < 0)
@@ -84,13 +94,13 @@ public class StateJumping : PlayerStateBase
             var posOffset = owner.IsRight ? 0.5f : -0.5f;
             //首辺りからrayを飛ばす
             Debug.DrawRay(owner.transform.position + new Vector3(0, startHeightOffset, 0), owner.transform.forward * armLength, Color.red);
-            if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), owner.transform.forward, out wallHit, armLength))
+            if (Physics.Raycast(owner.transform.position + new Vector3(0, startHeightOffset, 0), owner.transform.forward, out wallHit, armLength, owner.GroundMask))
             {
                 //Staticでなければ掴まない
-                if(!wallHit.collider.gameObject.isStatic)
-                {
-                    return;
-                }
+                //if(!wallHit.collider.gameObject.isStatic)
+                //{
+                //    return;
+                //}
                 //頭の上辺りからrayを飛ばす
                 if (!Physics.Raycast(new Vector3(owner.transform.position.x, wallHit.point.y + armLength + 0.5f, owner.transform.position.z), owner.transform.forward, 1f))
                 {
@@ -113,6 +123,12 @@ public class StateJumping : PlayerStateBase
 
                 }
             }
+        }
+
+        //移動スキルボタンが押されたらState***に遷移
+        if (owner.InputEventProvider.MoveSkill.Value && owner.MoveSkillCount < 1)
+        {
+            owner.ChangeState(owner.StateBlinking);
         }
     }
 
@@ -146,19 +162,17 @@ public class StateJumping : PlayerStateBase
             //壁スライド判定
             RaycastHit wallSlideHit;
             var slide = Physics.Raycast(owner.transform.position + new Vector3(0, 1.4f, 0), owner.transform.forward, out wallSlideHit, 0.2f, owner.GroundMask);
+            
             //壁スライドステートに移行
-            if (slide && wallSlideHit.transform.gameObject.isStatic)
+            if (slide/* && wallSlideHit.transform.gameObject.isStatic*/)
             {
-                if(owner.InputEventProvider.MoveDirection.Value.x != 0)
+                
+                if (owner.InputEventProvider.MoveDirection.Value.x != 0)
                 {
                     owner.ChangeState(owner.StateWallSliding);
                 }
             }
-            //移動スキルボタンが押されたらState***に遷移
-            if (owner.InputEventProvider.MoveSkill.Value && owner.MoveSkillCount < 1)
-            {
-                owner.ChangeState(owner.StateBlinking);
-            }
+            
         }
     }
 

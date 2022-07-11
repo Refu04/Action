@@ -5,18 +5,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UniRx;
 
-
-[System.Serializable]
-public class AttackEvent : UnityEvent<PlayerCore> { }
-
-[System.Serializable]
-public class AttackBase
-{
-    public float inputStartTime;
-    public float acceptTime;
-    public AttackEvent OnAttack;
-}
-
 public class PlayerCore : MonoBehaviour
 {
     //?X?e?[?g???C???X?^???X
@@ -43,6 +31,8 @@ public class PlayerCore : MonoBehaviour
     private BoxCollider col;
     public BoxCollider Col => col;
 
+    
+
     //????
     private bool isRight;
     public bool IsRight => isRight;
@@ -67,9 +57,9 @@ public class PlayerCore : MonoBehaviour
     public IReadOnlyReactiveProperty<int> HP => hp;
 
     //死亡通知Subject
-    private readonly Subject<Unit> deadSubject = new Subject<Unit>();
+    private static readonly Subject<Unit> deadSubject = new Subject<Unit>();
     //死亡通知
-    public IObservable<Unit> OnDead => deadSubject;
+    public static IObservable<Unit> OnDead => deadSubject;
 
     //死亡時リスポーンポイント
     private Vector3 respawnPoint;
@@ -87,10 +77,11 @@ public class PlayerCore : MonoBehaviour
     //?????C?x???g
     public IInputEventProvider InputEventProvider { get; set; }
 
-    
+
 
     [SerializeField]
-    public AttackBase[] attackDataList = new AttackBase[3];
+    private PlayerAttack playerAttack;
+    public PlayerAttack PlayerAttack => playerAttack;
 
     void Start()
     {
@@ -132,6 +123,11 @@ public class PlayerCore : MonoBehaviour
         }
         //Animator??JumpSpeed?p?????[?^???????x???l???????U??
         anim.SetFloat("JumpSpeed", rb.velocity.y);
+        //落下し
+        if(transform.position.y < -10)
+        {
+            deadSubject.OnNext(Unit.Default);
+        }
     }
 
     //?X?e?[?g??????
