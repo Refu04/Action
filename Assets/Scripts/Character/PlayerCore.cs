@@ -5,19 +5,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UniRx;
 
-
-[System.Serializable]
-public class AttackEvent : UnityEvent<PlayerCore> { }
-
-[System.Serializable]
-public class AttackBase
-{
-    public float inputStartTime;
-    public float acceptTime;
-    public AttackEvent OnAttack;
-
-}
-
 public class PlayerCore : MonoBehaviour
 {
     //?X?e?[?g???C???X?^???X
@@ -43,6 +30,8 @@ public class PlayerCore : MonoBehaviour
     [SerializeField]
     private BoxCollider col;
     public BoxCollider Col => col;
+
+    
 
     //????
     private bool isRight;
@@ -88,10 +77,11 @@ public class PlayerCore : MonoBehaviour
     //?????C?x???g
     public IInputEventProvider InputEventProvider { get; set; }
 
-    
+
 
     [SerializeField]
-    public AttackBase[] attackDataList = new AttackBase[3];
+    private PlayerAttack playerAttack;
+    public PlayerAttack PlayerAttack => playerAttack;
 
     void Start()
     {
